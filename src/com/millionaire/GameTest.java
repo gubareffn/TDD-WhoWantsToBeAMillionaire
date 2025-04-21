@@ -32,4 +32,11 @@ public class GameTest {
         game.nextQuestion();
         assertTrue(game.isCompleted());
     }
+
+    @Test
+    void shouldReturnCorrectPrizeAmounts() {
+        Game game = new Game(new Question[0]);
+        assertEquals(500, game.getPrize(0));
+        assertEquals(1000000, game.getPrize(11));
+    }
 }
