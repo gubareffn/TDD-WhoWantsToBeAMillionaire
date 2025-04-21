@@ -1,12 +1,16 @@
 package com.millionaire;
 
+import java.util.Scanner;
+
 public class MillionaireGame {
     private final Game game;
     private boolean gameOver;
     private int score;
+    private final Scanner scanner;
 
     public MillionaireGame(Question[] questions) {
         this.game = new Game(questions);
+        this.scanner = new Scanner(System.in);
         this.gameOver = false;
         this.score = 0;
     }
@@ -17,6 +21,38 @@ public class MillionaireGame {
 
     private void start() {
         printWelcomeMessage();
+        while (!gameOver && !game.isCompleted()) {
+            showCurrentQuestion();
+            processUserInput();
+        }
+    }
+
+    private void processUserInput() {
+        Question current = game.getCurrentQuestion();
+        int answersCount = current.getAnswers().length;
+        int answer = -1;
+
+        while (answer < 0) {
+            try {
+                System.out.print("\nВаш ответ (1-" + answersCount + "): ");
+                answer = scanner.nextInt() - 1;
+
+                if (answer < 0 || answer >= answersCount) {
+                    System.out.println("Введите число от 1 до " + answersCount);
+                    answer = -1;
+                }
+            } catch (Exception e) {
+                System.out.println("Ошибка ввода! Пожалуйста, введите число.");
+                scanner.nextLine();
+            }
+        }
+
+        processAnswer(answer);
+        System.out.println(
+                gameOver ? "\nНеправильно! Игра окончена." :
+                        game.isCompleted() ? "\nПоздравляем! Вы ответили на все вопросы!" :
+                                "\nПравильно! Следующий вопрос..."
+        );
     }
 
     private static Question[] prepareQuestions() {
@@ -27,7 +63,7 @@ public class MillionaireGame {
                 new Question("Столица России?",
                         new String[]{"Киев", "Москва", "Минск", "Астана"}, 1),
 
-                new Question("Какой язык мы сейчас используем?",
+                new Question("Для какого языка программирования используется JVM?",
                         new String[]{"Python", "Java", "C++", "JavaScript"}, 1),
 
                 new Question("Сколько планет в Солнечной системе?",
@@ -57,6 +93,35 @@ public class MillionaireGame {
                 new Question("Какая самая большая страна по площади?",
                         new String[]{"Китай", "США", "Россия", "Канада"}, 2)
         };
+    }
+
+    public boolean isGameCompleted() {
+        return !gameOver && game.isCompleted();
+    }
+
+    private void showCurrentQuestion() {
+        Question current = game.getCurrentQuestion();
+        System.out.printf("\nВопрос за $%,d:\n", game.getCurrentPrize());
+        System.out.println(current.getText());
+
+        String[] answers = current.getAnswers();
+        for (int i = 0; i < answers.length; i++) {
+            System.out.printf("%d. %s\n", i + 1, answers[i]);
+        }
+    }
+
+    public void processAnswer(int answerIndex) {
+        if (gameOver) return;
+
+        if (game.getCurrentQuestion().checkAnswer(answerIndex)) {
+            score = game.getCurrentPrize();
+            game.nextQuestion();
+            if (game.isCompleted()) {
+                gameOver = true;
+            }
+        } else {
+            gameOver = true;
+        }
     }
 
     private void printWelcomeMessage() {

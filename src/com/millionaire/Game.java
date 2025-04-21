@@ -26,6 +26,10 @@ public class Game {
         return PRIZES[Math.min(level, PRIZES.length - 1)];
     }
 
+    public int getCurrentPrize() {
+        return getPrize(currentLevel);
+    }
+
     public boolean isCompleted() {
         return currentLevel >= questions.length;
     }
