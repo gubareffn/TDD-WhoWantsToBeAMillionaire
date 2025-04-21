@@ -23,4 +23,13 @@ public class GameTest {
         game.nextQuestion();
         assertEquals(1, game.getCurrentLevel());
     }
+
+    @Test
+    void shouldDetectGameCompletion() {
+        Question[] questions = {new Question("Q", new String[]{""}, 0)};
+        Game game = new Game(questions);
+        assertFalse(game.isCompleted());
+        game.nextQuestion();
+        assertTrue(game.isCompleted());
+    }
 }
