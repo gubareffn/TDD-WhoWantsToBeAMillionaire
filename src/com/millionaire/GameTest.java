@@ -13,5 +13,14 @@ public class GameTest {
         Game game = new Game(questions);
         assertEquals(questions[0], game.getCurrentQuestion());
         assertEquals(0, game.getCurrentLevel());
+
+    }
+
+    @Test
+    void shouldMoveToNextQuestion() {
+        Question[] questions = new Question[2]; // Заглушки
+        Game game = new Game(questions);
+        game.nextQuestion();
+        assertEquals(1, game.getCurrentLevel());
     }
 }
