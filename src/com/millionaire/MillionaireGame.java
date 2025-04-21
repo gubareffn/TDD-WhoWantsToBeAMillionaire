@@ -15,12 +15,6 @@ public class MillionaireGame {
     public int getScore() { return score; }
     public Question getCurrentQuestion() { return game.getCurrentQuestion(); }
 
-    public static void main(String[] args) {
-        Question[] questions = prepareQuestions();
-        new MillionaireGame(questions).start();
-    }
-
-
     private void start() {
         printWelcomeMessage();
     }
@@ -74,4 +68,8 @@ public class MillionaireGame {
         return String.format("$%,d", amount);
     }
 
+    public static void main(String[] args) {
+        Question[] questions = prepareQuestions();
+        new MillionaireGame(questions).start();
+    }
 }
