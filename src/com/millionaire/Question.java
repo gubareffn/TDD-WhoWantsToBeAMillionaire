@@ -11,6 +11,10 @@ public class Question {
         this.correctIndex = correctIndex;
     }
 
+    public boolean checkAnswer(int index) {
+        return index == correctIndex;
+    }
+
     public String getText() { return text; }
     public String[] getAnswers() { return answers; }
     public int getCorrectIndex() { return correctIndex; }

@@ -11,4 +11,11 @@ public class QuestionTest {
         assertArrayEquals(new String[]{"A", "B"}, q.getAnswers());
         assertEquals(0, q.getCorrectIndex());
     }
+
+    @Test
+    void shouldCheckAnswerCorrectly() {
+        Question q = new Question("Test?", new String[]{"A", "B"}, 1);
+        assertTrue(q.checkAnswer(1));
+        assertFalse(q.checkAnswer(0));
+    }
 }
