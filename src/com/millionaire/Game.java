@@ -18,6 +18,10 @@ public class Game {
         }
     }
 
+    public boolean isCompleted() {
+        return currentLevel >= questions.length;
+    }
+
     public Question getCurrentQuestion() { return currentQuestion; }
     public int getCurrentLevel() { return currentLevel; }
 }
