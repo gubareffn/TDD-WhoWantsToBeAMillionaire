@@ -11,6 +11,13 @@ public class Game {
         this.currentQuestion = questions[0];
     }
 
+    public void nextQuestion() {
+        currentLevel++;
+        if (currentLevel < questions.length) {
+            currentQuestion = questions[currentLevel];
+        }
+    }
+
     public Question getCurrentQuestion() { return currentQuestion; }
     public int getCurrentLevel() { return currentLevel; }
 }
